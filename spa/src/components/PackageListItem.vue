@@ -1,26 +1,17 @@
 <script setup lang="ts">
 import { Icon } from "@iconify/vue";
-import { PackageStatus, type Package } from "@/types";
+import type { Package } from "@/types";
 import { computed } from "vue";
-import PackageStatusIndicator from "./PackageStatusIndicator.vue";
+import PackageStatusIndicator from "@/components/PackageStatusIndicator.vue";
+import PackageStatusLabel from "@/components/PackageStatusLabel.vue";
+import { dayjs } from "@/services/dayjs";
 
 const props = defineProps<{
   package: Package;
 }>();
 
-const packageLabel = computed(() => {
-  switch (props.package.status) {
-    case PackageStatus.Posted:
-      return "Posted";
-    case PackageStatus.InTransit:
-      return "In transit";
-    case PackageStatus.OutForDelivery:
-      return "Out for delivery";
-    case PackageStatus.Delivered:
-      return "Delivered";
-    default:
-      return "Unknown";
-  }
+const lastTrackedAtForHumans = computed(() => {
+  return dayjs(props.package.lastTrackedAt).fromNow();
 });
 </script>
 
@@ -51,19 +42,9 @@ const packageLabel = computed(() => {
         </div>
         <div class="flex shrink-0 items-center gap-x-4">
           <div class="hidden sm:flex sm:flex-col sm:items-end">
-            <p
-              class="rounded-full px-3 text-sm leading-6 text-gray-900"
-              :class="{
-                'bg-gray-200': package.status === PackageStatus.Posted,
-                'bg-amber-200': package.status === PackageStatus.InTransit,
-                'bg-red-300': package.status === PackageStatus.OutForDelivery,
-                'bg-green-200': package.status === PackageStatus.Delivered
-              }"
-            >
-              {{ packageLabel }}
-            </p>
+            <PackageStatusLabel :status="package.status" />
             <p class="mt-1 text-xs leading-5 text-gray-500">
-              Last tracked <time datetime="2023-01-23T13:23Z">7 minutes ago</time>
+              Last tracked {{ lastTrackedAtForHumans }}
             </p>
           </div>
           <Icon icon="ic:baseline-keyboard-arrow-right" class="h-5 w-5 flex-none text-gray-400" />

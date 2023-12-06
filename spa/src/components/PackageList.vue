@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import PackageListItem from "./PackageListItem.vue";
+import PackageListItem from "@/components/PackageListItem.vue";
 import { PackageStatus, type Package } from "@/types";
 
 const packages = ref<Package[]>([

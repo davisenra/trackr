@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import DashboardView from "@/views/DashboardView.vue";
-import LoginView from "@/views/LoginView.vue";
-import RegisterView from "@/views/RegisterView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,14 +10,19 @@ const router = createRouter({
       component: DashboardView
     },
     {
+      path: "/packages/:id",
+      name: "packages",
+      component: () => import("@/views/PackageView.vue")
+    },
+    {
       path: "/login",
       name: "login",
-      component: () => LoginView
+      component: () => import("@/views/LoginView.vue")
     },
     {
       path: "/register",
       name: "register",
-      component: () => RegisterView
+      component: () => import("@/views/RegisterView.vue")
     }
   ]
 });
