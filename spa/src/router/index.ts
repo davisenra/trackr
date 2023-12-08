@@ -10,6 +10,11 @@ const router = createRouter({
       component: DashboardView
     },
     {
+      path: "/packages/track",
+      name: "Track new package",
+      component: () => import("@/views/TrackNewPackageView.vue")
+    },
+    {
       path: "/packages/:id",
       name: "packages",
       component: () => import("@/views/PackageView.vue")

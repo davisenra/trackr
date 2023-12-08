@@ -36,16 +36,24 @@ onBeforeUnmount(() => {
         <Icon icon="ic:baseline-track-changes" />
         <h1 class="font-bold">Trackr</h1>
       </div>
-      <div class="hidden space-x-8 md:flex">
+      <div class="hidden space-x-2 md:flex">
         <router-link
           to="/"
-          class="inline-flex items-center border-b-2 border-yellow-600 bg-opacity-30 px-1 pt-1 font-medium"
+          active-class="border-b border-yellow-700"
+          class="inline-flex items-center px-2 font-medium transition-all hover:border-b hover:border-yellow-700"
         >
           Dashboard
         </router-link>
+        <router-link
+          to="/packages/track"
+          active-class="border-b border-yellow-700"
+          class="inline-flex items-center px-2 font-medium transition-all hover:border-b hover:border-yellow-700"
+        >
+          Track
+        </router-link>
         <button
           @click="handleLogout"
-          class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 font-medium"
+          class="inline-flex items-center px-2 font-medium transition-all hover:border-b hover:border-yellow-700"
         >
           Sign out
         </button>
@@ -69,6 +77,12 @@ onBeforeUnmount(() => {
         >
           <router-link to="/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
             Dashboard
+          </router-link>
+          <router-link
+            to="/packages/track"
+            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+          >
+            Track
           </router-link>
           <button
             @click="handleLogout"

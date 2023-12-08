@@ -21,7 +21,6 @@ import GuestLayout from "@/layouts/GuestLayout.vue";
             />
           </div>
         </div>
-
         <div>
           <label for="password" class="block text-sm font-medium leading-6 text-gray-900">
             Password
@@ -37,7 +36,6 @@ import GuestLayout from "@/layouts/GuestLayout.vue";
             />
           </div>
         </div>
-
         <div>
           <button
             type="submit"
@@ -47,7 +45,6 @@ import GuestLayout from "@/layouts/GuestLayout.vue";
           </button>
         </div>
       </form>
-
       <p class="mt-10 text-center text-sm text-gray-500">
         Not a member?
         <router-link
