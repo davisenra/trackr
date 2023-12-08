@@ -9,6 +9,7 @@ const currentRouteName = computed(() => {
   if (!routeName) {
     return "";
   }
+
   return routeName[0].toUpperCase() + routeName.slice(1);
 });
 </script>

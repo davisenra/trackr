@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import DashboardView from "@/views/DashboardView.vue";
+import { useAuthStore } from "@/stores/auth";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,26 @@ const router = createRouter({
       component: () => import("@/views/RegisterView.vue")
     }
   ]
+});
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+
+  if (to.name !== "login" && to.name !== "register" && authStore.auth.isAuthenticated === false) {
+    next({ name: "login" });
+  } else {
+    next();
+  }
+});
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+
+  if (to.name === "login" && authStore.auth.isAuthenticated === true) {
+    next({ name: "dashboard" });
+  } else {
+    next();
+  }
 });
 
 export default router;

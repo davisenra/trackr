@@ -1,26 +1,16 @@
 import type { ApiResponse, Package, PackageWithEvents } from "@/types";
-import { ofetch } from "ofetch";
-
-const api = ofetch.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
-  credentials: "include",
-  async onResponse({ response }) {
-    if (response.status === 401) {
-      // TODO: handle unauthenticated requests
-    }
-  }
-});
+import { httpClient } from "@/services/http";
 
 const fetchAllPackages = async () => {
-  return await api<ApiResponse<Package[]>>("/api/packages");
+  return await httpClient<ApiResponse<Package[]>>("/api/packages");
 };
 
 const fetchPackage = async (id: number) => {
-  return await api<ApiResponse<PackageWithEvents>>(`/api/packages/${id}`);
+  return await httpClient<ApiResponse<PackageWithEvents>>(`/api/packages/${id}`);
 };
 
 const deletePackage = async (id: number) => {
-  return await api<ApiResponse<Package>>(`/api/packages/${id}`, {
+  return await httpClient<ApiResponse<Package>>(`/api/packages/${id}`, {
     method: "DELETE"
   });
 };
@@ -30,7 +20,7 @@ const trackPackage = async (payload: {
   description?: string;
   trackingNumber: string;
 }) => {
-  return await api<ApiResponse<Package>>("/api/packages", {
+  return await httpClient<ApiResponse<Package>>("/api/packages", {
     method: "POST",
     body: JSON.stringify(payload)
   });

@@ -71,13 +71,13 @@ const allowSubmit = computed(() => {
               ></textarea>
             </div>
           </div>
-          <p class="text-sm text-gray-400">* Required fields</p>
+          <p class="text-xs text-gray-400">* Required fields</p>
           <button
             type="submit"
             class="inline-flex w-max items-center gap-1 rounded-md border border-green-500 px-3 py-1 text-lg text-green-500 transition-all enabled:hover:bg-green-500 enabled:hover:text-white disabled:cursor-not-allowed disabled:border-gray-600 disabled:text-gray-600"
             :disabled="!allowSubmit"
           >
-            <Icon icon="mdi:content-save" />
+            <Icon icon="mdi:check" />
             Track
           </button>
         </form>
