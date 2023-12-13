@@ -30,26 +30,7 @@ class PackageServiceTest extends TestCase
     {
         parent::setUp();
 
-        $this->mock(TrackerInterface::class, function (MockInterface $mock) {
-            /* @phpstan-ignore-next-line */
-            $mock->expects('track')
-                ->atMost()
-                ->times(1)
-                ->andReturn([
-                    new TrackedEvent(
-                        'Objeto postado',
-                        new \DateTimeImmutable('-1 week'),
-                    ),
-                    new TrackedEvent(
-                        'Objeto saiu para entrega',
-                        new \DateTimeImmutable('-3 days'),
-                    ),
-            ]);
-        });
-
-        $trackingService = $this->app->get(TrackerInterface::class);
-
-        $this->packageService = new PackageService($trackingService);
+        $this->packageService = new PackageService();
     }
 
     public function testItCanBeInstantiated(): void
@@ -231,7 +212,25 @@ class PackageServiceTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $this->packageService->trackEvents($package);
+        /** @var TrackerInterface $tracker */
+        $tracker = $this->mock(TrackerInterface::class, function (MockInterface $mock) {
+            /* @phpstan-ignore-next-line */
+            $mock->expects('track')
+                ->atMost()
+                ->times(1)
+                ->andReturn([
+                    new TrackedEvent(
+                        'Objeto postado',
+                        new \DateTimeImmutable('-1 week'),
+                    ),
+                    new TrackedEvent(
+                        'Objeto saiu para entrega',
+                        new \DateTimeImmutable('-3 days'),
+                    ),
+                ]);
+        });
+
+        $this->packageService->trackEvents($tracker, $package);
 
         $events = PackageEvent::where(['package_id' => $package->id])->get();
 

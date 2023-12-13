@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Contracts\TrackerInterface;
 use App\Services\PackageService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -25,6 +26,7 @@ class TrackPackageEvents implements ShouldQueue
     }
 
     public function handle(
+        TrackerInterface $tracker,
         PackageService $packageService,
         LoggerInterface $logger,
     ): void {
@@ -39,7 +41,7 @@ class TrackPackageEvents implements ShouldQueue
         }
 
         try {
-            $packageService->trackEvents($package);
+            $packageService->trackEvents($tracker, $package);
         } catch (\Throwable $e) {
             $logger->error('Error while tracking package events', [
                 'package_id' => $this->packageId,

@@ -20,11 +20,6 @@ use Illuminate\Support\Facades\DB;
 
 final class PackageService
 {
-    public function __construct(
-        private readonly TrackerInterface $trackingService
-    ) {
-    }
-
     /**
      * @return Collection<int, Package>
      */
@@ -109,9 +104,9 @@ final class PackageService
         return $package;
     }
 
-    public function trackEvents(Package $package): void
+    public function trackEvents(TrackerInterface $trackingService, Package $package): void
     {
-        $events = $this->trackingService->track($package->tracking_code);
+        $events = $trackingService->track($package->tracking_code);
 
         $this->persistPackageEvents($package, $events);
     }
