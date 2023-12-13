@@ -8,9 +8,10 @@ const login = async (payload: { email: string; password: string }) => {
   return await httpClient<{
     status: boolean;
     message: string;
-  }>("/login", {
+  }>("/api/v1/login", {
     method: "POST",
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
+    ignoreResponseError: true
   });
 };
 

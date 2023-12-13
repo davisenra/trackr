@@ -8,8 +8,8 @@ const httpClient: $Fetch = ofetch.create({
       ...options.headers,
       "Content-Type": "application/json",
       Accept: "application/json",
-      Referer: import.meta.env.VITE_API_BASE_URL,
-      Origin: import.meta.env.VITE_API_BASE_URL,
+      Referer: import.meta.env.VITE_APP_DOMAIN,
+      Origin: import.meta.env.VITE_APP_DOMAIN,
       credentials: "include"
     };
   },
