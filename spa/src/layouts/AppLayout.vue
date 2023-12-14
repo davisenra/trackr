@@ -15,13 +15,13 @@ const currentRouteName = computed(() => {
 </script>
 
 <template>
-  <main>
-    <TheNavbar />
-    <div class="bg-white shadow">
-      <div class="mx-auto flex max-w-7xl items-center px-3 py-6">
-        <h1 class="text-2xl font-bold">{{ currentRouteName }}</h1>
-      </div>
+  <TheNavbar />
+  <div class="bg-white shadow">
+    <div class="mx-auto flex max-w-7xl items-center px-3 py-4">
+      <h1 class="text-2xl font-bold">{{ currentRouteName }}</h1>
     </div>
+  </div>
+  <main>
     <slot />
   </main>
 </template>

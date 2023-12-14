@@ -33,10 +33,12 @@ const router = createRouter({
   ]
 });
 
+const guestRoutes = ["login", "register"];
+
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
 
-  if (to.name !== "login" && to.name !== "register" && authStore.auth.isAuthenticated === false) {
+  if (!guestRoutes.includes(to.name as string) && authStore.auth.isAuthenticated === false) {
     next({ name: "login" });
   } else {
     next();
@@ -46,7 +48,7 @@ router.beforeEach((to, from, next) => {
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
 
-  if (to.name === "login" && authStore.auth.isAuthenticated === true) {
+  if (guestRoutes.includes(to.name as string) && authStore.auth.isAuthenticated === true) {
     next({ name: "dashboard" });
   } else {
     next();

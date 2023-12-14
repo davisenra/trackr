@@ -15,4 +15,19 @@ const login = async (payload: { email: string; password: string }) => {
   });
 };
 
-export { getCsrfToken, login };
+const hasValidSession = async () => {
+  try {
+    await httpClient<Promise<void>>("/api/v1/me");
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
+const logout = async () => {
+  return await httpClient<Promise<void>>("/api/v1/logout", {
+    method: "POST"
+  });
+};
+
+export { getCsrfToken, login, hasValidSession, logout };

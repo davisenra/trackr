@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { reactive } from "vue";
-import { getCsrfToken, login } from "@/services/auth";
+import { getCsrfToken, login, logout as logoutFromServer, hasValidSession } from "@/services/auth";
 import router from "@/router";
 
 export const useAuthStore = defineStore("auth", () => {
@@ -20,8 +20,19 @@ export const useAuthStore = defineStore("auth", () => {
     return response;
   };
 
+  const logout = async () => {
+    await logoutFromServer().catch((e) => console.log(e));
+    auth.isAuthenticated = false;
+  };
+
+  const checkSession = async () => {
+    auth.isAuthenticated = await hasValidSession();
+  };
+
   return {
     auth,
-    attemptLogin
+    attemptLogin,
+    checkSession,
+    logout
   };
 });

@@ -1,4 +1,22 @@
 import { ofetch, type $Fetch } from "ofetch";
+import { useAuthStore } from "@/stores/auth";
+
+const getCsrfCookie = () => {
+  if (!document.cookie) {
+    return null;
+  }
+
+  const xsrfCookies = document.cookie
+    .split(";")
+    .map((c) => c.trim())
+    .filter((c) => c.startsWith("XSRF-TOKEN" + "="));
+
+  if (xsrfCookies.length === 0) {
+    return null;
+  }
+
+  return decodeURIComponent(xsrfCookies[0].split("=")[1]);
+};
 
 const httpClient: $Fetch = ofetch.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -10,12 +28,14 @@ const httpClient: $Fetch = ofetch.create({
       Accept: "application/json",
       Referer: import.meta.env.VITE_APP_DOMAIN,
       Origin: import.meta.env.VITE_APP_DOMAIN,
-      credentials: "include"
+      credentials: "include",
+      "X-XSRF-TOKEN": getCsrfCookie() as string
     };
   },
   async onResponse({ response }) {
     if (response.status === 401) {
-      // TODO: handle unauthenticated requests
+      const authStore = useAuthStore();
+      await authStore.logout();
     }
   }
 });
