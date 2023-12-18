@@ -71,7 +71,7 @@ onBeforeUnmount(() => {
         </div>
         <div
           v-if="header.mobileMenuOpen"
-          class="absolute right-0 z-10 -mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          class="absolute right-0 z-20 -mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           tabindex="-1"
         >

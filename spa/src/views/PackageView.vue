@@ -85,10 +85,7 @@ onMounted(() => {
   <AppLayout>
     <div class="mx-3 my-3 flex justify-center md:mx-6 md:my-6">
       <Transition>
-        <div
-          v-if="packg"
-          class="flex w-full max-w-7xl flex-col justify-center gap-3 space-y-2 rounded-md bg-white p-6 shadow"
-        >
+        <div v-if="packg" class="w-full max-w-7xl gap-3 space-y-2 rounded-md bg-white p-6 shadow">
           <div class="flex items-center justify-between">
             <h1 class="text-2xl font-bold">
               {{ packg.name }}
