@@ -1,13 +1,18 @@
 <script setup lang="ts">
+import { useAuthStore } from "@/stores/auth";
 import { Icon } from "@iconify/vue";
 import { reactive, onMounted, onBeforeUnmount } from "vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
+const authStore = useAuthStore();
 const header = reactive({
   mobileMenuOpen: false
 });
 
-function handleLogout() {
-  console.log("logout");
+async function handleLogout() {
+  await authStore.logout();
+  router.push("/login");
 }
 
 function handleClickOutside(event: MouseEvent) {
